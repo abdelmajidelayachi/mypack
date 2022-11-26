@@ -1,2 +1,4 @@
-package com.mypack.service;public class AdminService {
+package com.mypack.service;
+
+public class AdminService {
 }

@@ -1,4 +1,4 @@
 package com.mypack.entity;
 
-public class Admin {
+public class User {
 }
