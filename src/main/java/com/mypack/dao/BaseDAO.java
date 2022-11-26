@@ -1,2 +1,4 @@
-package com.mypack.dao;public interface BaseDAO {
+package com.mypack.dao;
+
+public interface BaseDAO {
 }
