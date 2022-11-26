@@ -1,2 +1,4 @@
-package com.mypack.util;public class Execption {
+package com.mypack.util;
+
+public class Exception {
 }
