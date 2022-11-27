@@ -1,15 +1,17 @@
 package com.mypack.dao.interfaces;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@SuppressWarnings("unused")
 public interface BaseDAO<T> {
-    public boolean save(T obj);
-    public boolean update(T obj);
-    public T findById(int id);
-    public boolean delete(int id);
-    public List<T> getAll();
-    public List<T> getAllWhere(String field, Object value);
-    
-
-
+    boolean save(T obj);
+    boolean update(T obj);
+    T findById(int id);
+    boolean delete(int id);
+    List<T> getAll();
+    List<T> getAllWhere(String field, Object value);
+    List<T> customQuery(String jpql, Map<String, Object> params);
+    //    Object customNativeQuery(String sql, HashMap<String, Object> map);
 }

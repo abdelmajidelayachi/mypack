@@ -5,14 +5,17 @@ import com.mypack.dao.interfaces.BaseDAO;
 import com.mypack.util.SoutError;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.Map;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class BaseDAOImpl<T> implements BaseDAO<T> {
 
     public static EntityManager em = EntityManagerConfig.getEntityManager();
 
-    private Class<T> clazz;
+    final private Class<T> clazz;
 
     public BaseDAOImpl(Class<T> clazz)
     {
@@ -137,4 +140,47 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
+
+    @Override
+    public List<T> customQuery(String jpql, Map<String, Object> params) {
+        em.getTransaction().begin(); // begin transaction
+        try{
+            TypedQuery<T> query = em.createQuery(jpql,clazz);
+
+            final int[] index = {params.size()};
+            params.forEach((key, value)->{
+                query.setParameter(index[0],value);
+                index[0] -=1;
+            });
+            List<T> list = query.getResultList();
+            em.getTransaction().commit(); // commit transaction
+            return list;
+        }catch (Exception e){
+            em.getTransaction().rollback(); // rollback transaction
+            SoutError.print("yellow", e.getMessage());
+            return null;
+        }finally {
+            em.close(); // close entityManager
+            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
+        }
+    }
+    //    @Override
+    //    public Object customNativeQuery(String sql, HashMap<String, Object> map) {
+    //        em.getTransaction().begin(); // begin transaction
+    //        try {
+    //            Query query = em.createNativeQuery(sql);
+    //            // select firstName, lastName from Manager where id_manager = ? or id_manager = ?
+    //
+    //            em.getTransaction().commit(); // commit transaction
+    //            return true;
+    //        }catch (Exception e)
+    //        {
+    //            em.getTransaction().rollback(); // rollback transaction
+    //            SoutError.print("yellow", e.getMessage());
+    //            return null;
+    //        }finally {
+    //            em.close(); // close entityManager
+    //            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
+    //        }
+    //    }
 }
