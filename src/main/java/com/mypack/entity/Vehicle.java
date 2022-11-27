@@ -2,8 +2,6 @@ package com.mypack.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "vehicle", catalog = "mypack")
 public class Vehicle {

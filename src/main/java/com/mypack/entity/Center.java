@@ -25,6 +25,10 @@ public class Center {
     @Column(name = "manager_id")
     private String managerId;
 
+//    @OneToOne
+//    @JoinColumn(name = "")
+//    private
+
     @OneToMany(mappedBy = "center_id")
     private Set<Driver> drivers = new HashSet<>();
 
