@@ -1,6 +1,7 @@
 package com.mypack.service;
 
 import com.mypack.dao.BaseDAOImpl;
+import com.mypack.entity.Admin;
 import com.mypack.util.SoutError;
 
 import java.util.HashMap;
