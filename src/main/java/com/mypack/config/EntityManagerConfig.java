@@ -5,20 +5,12 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class EntityManagerConfig {
-    public static EntityManagerFactory emf = null;
-
-    public static EntityManagerFactory getEntityManagerFactory()
-    {
-        if(emf == null)
-        {
-            emf = Persistence.createEntityManagerFactory("default");
-            return emf;
-        }
-        return emf;
+    private static EntityManager entityManager = null;
+    static {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mypack");
+        entityManager = entityManagerFactory.createEntityManager();
     }
-
-    public static EntityManager getEntityManager()
-    {
-        return getEntityManagerFactory().createEntityManager();
+    public static EntityManager getEntityManager(){
+        return entityManager;
     }
 }

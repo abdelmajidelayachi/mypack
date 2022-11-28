@@ -27,7 +27,7 @@ public class Driver {
     private String password;
 
     @Basic
-    @Column(name = "center_id")
+    @Column(name = "center_id",insertable = false, updatable = false)
     private Integer center_id;
 
     @ManyToOne

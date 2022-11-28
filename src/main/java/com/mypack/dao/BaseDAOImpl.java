@@ -3,9 +3,7 @@ package com.mypack.dao;
 import com.mypack.config.EntityManagerConfig;
 import com.mypack.dao.interfaces.BaseDAO;
 import com.mypack.util.SoutError;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +11,6 @@ import java.util.Map;
 @SuppressWarnings({"unchecked", "unused"})
 public class BaseDAOImpl<T> implements BaseDAO<T> {
 
-    public static EntityManager em = EntityManagerConfig.getEntityManager();
 
     final private Class<T> clazz;
 
@@ -24,26 +21,37 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 
     @Override
     public boolean save(T obj) {
-        em.getTransaction().begin(); // begin transaction
+        System.out.println("-----------  1  -----------");
+//        EntityManager em = EntityManagerConfig.getEntityManager();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("mypack");
+        EntityManager em = emf.createEntityManager();
+        System.out.println("-----------  2  -----------");
         try {
+            System.out.println("-----------  3  -----------");
+            em.getTransaction().begin(); // begin transaction
             em.persist(obj); // add the entity object to the persistent context, so any further changes are tracked.
             em.getTransaction().commit(); // commit transaction
+            System.out.println("-----------  4  -----------");
             return true;
         }catch (Exception e)
         {
+            System.out.println("-----------  5  -----------");
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
+            System.out.println("-----------  6  -----------");
             return false;
         }finally {
+            System.out.println("-----------  7  -----------");
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
+            System.out.println("-----------  8  -----------");
         }
     }
 
     @Override
     public boolean update(T obj) {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
+            em.getTransaction().begin(); // begin transaction
             em.merge(obj); // The main intention of the merge method is to update a persistent entity instance with new field values from a detached entity instance.
             em.getTransaction().commit(); // commit transaction
             return true;
@@ -54,14 +62,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return false;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
 
     @Override
     public T findById(int id) {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
+            em.getTransaction().begin(); // begin transaction
             T obj = em.find(clazz, id); // T find(Class<T> entityClass, Object primaryKey) – Returns entity for the given primary key.
             em.getTransaction().commit(); // commit transaction
             return obj;
@@ -72,14 +80,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return null;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
 
     @Override
     public boolean delete(int id) {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
+            em.getTransaction().begin(); // begin transaction
             T obj = findById(id);
             if(obj != null)
             {
@@ -95,14 +103,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return false;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
 
     @Override
     public List<T> getAll() {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
+            em.getTransaction().begin(); // begin transaction
             Query query = em.createQuery("select t from "+ clazz.getSimpleName() +" t");
             List<T> list = query.getResultList();
 
@@ -115,14 +123,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return null;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
 
     @Override
     public List<T> getAllWhere(String field, Object value) {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
+            em.getTransaction().begin(); // begin transaction
             Query query = em.createQuery("select t from "+clazz.getSimpleName()+" t where "+ field + "= :value");
             query.setParameter("value", value);
 
@@ -137,14 +145,14 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return null;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
 
     @Override
     public List<T> customQuery(String jpql, Map<String, Object> params) {
-        em.getTransaction().begin(); // begin transaction
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try{
+            em.getTransaction().begin(); // begin transaction
             TypedQuery<T> query = em.createQuery(jpql,clazz);
 
             final int[] index = {params.size()};
@@ -161,11 +169,11 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             return null;
         }finally {
             em.close(); // close entityManager
-            EntityManagerConfig.getEntityManagerFactory().close(); // close entityManagerFactory
         }
     }
     //    @Override
     //    public Object customNativeQuery(String sql, HashMap<String, Object> map) {
+    //        EntityManager em = EntityManagerConfig.getEntityManager();
     //        em.getTransaction().begin(); // begin transaction
     //        try {
     //            Query query = em.createNativeQuery(sql);
