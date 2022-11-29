@@ -19,7 +19,7 @@ public class Vehicle {
     private String type;
 
     @Basic
-    @Column(name = "driver_id")
+    @Column(name = "driver_id", insertable = false,updatable = false)
     private Integer driverId;
 
     @OneToOne
