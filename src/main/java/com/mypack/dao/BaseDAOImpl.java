@@ -3,7 +3,9 @@ package com.mypack.dao;
 import com.mypack.config.EntityManagerConfig;
 import com.mypack.dao.interfaces.BaseDAO;
 import com.mypack.util.SoutError;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -21,29 +23,19 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 
     @Override
     public boolean save(T obj) {
-        System.out.println("-----------  1  -----------");
-//        EntityManager em = EntityManagerConfig.getEntityManager();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("mypack");
-        EntityManager em = emf.createEntityManager();
-        System.out.println("-----------  2  -----------");
+        EntityManager em = EntityManagerConfig.getEntityManager();
         try {
-            System.out.println("-----------  3  -----------");
             em.getTransaction().begin(); // begin transaction
             em.persist(obj); // add the entity object to the persistent context, so any further changes are tracked.
             em.getTransaction().commit(); // commit transaction
-            System.out.println("-----------  4  -----------");
             return true;
         }catch (Exception e)
         {
-            System.out.println("-----------  5  -----------");
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
-            System.out.println("-----------  6  -----------");
             return false;
         }finally {
-            System.out.println("-----------  7  -----------");
             em.close(); // close entityManager
-            System.out.println("-----------  8  -----------");
         }
     }
 
@@ -173,7 +165,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
     }
     //    @Override
     //    public Object customNativeQuery(String sql, HashMap<String, Object> map) {
-    //        EntityManager em = EntityManagerConfig.getEntityManager();
+//            EntityManager em = EntityManagerConfig.getEntityManager();
     //        em.getTransaction().begin(); // begin transaction
     //        try {
     //            Query query = em.createNativeQuery(sql);
