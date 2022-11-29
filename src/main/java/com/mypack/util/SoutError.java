@@ -13,7 +13,7 @@ public class SoutError {
             case "yellow":
                 System.out.println("\u001B[33m" + error + "\u001B[0m");
                 break;
-            case "blue":
+            case "orange":
                 System.out.println("\u001B[34m" + error + "\u001B[0m");
                 break;
             default:

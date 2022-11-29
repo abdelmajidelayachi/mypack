@@ -5,8 +5,31 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+      <h:head>
+          <title>myPack</title>
+          <link rel="stylesheet" type="text/css" href="css/style.css"/>
+      </h:head>
 <f:view>
-    <h:outputLabel value="hello world !"/>
+    <h:form>
+        <h:outputLabel for="email">
+            <h:outputText value="email" />
+        </h:outputLabel>
+
+        <h:inputText id="email" value="#{Auth.email}" />
+
+        <h:outputLabel for="password">
+            <h:outputText value="password" />
+        </h:outputLabel>
+
+        <h:inputText id="password" value="#{Auth.password}" />
+
+        <h:selectOneRadio value="#{Auth.role}">
+            <f:selectItem itemValue="Admin" itemLabel="Admin" />
+            <f:selectItem itemValue="Manager" itemLabel="Manager" />
+            <f:selectItem itemValue="Driver" itemLabel="Driver" />
+        </h:selectOneRadio>
+
+        <h:commandButton id="cmdBtn" value="Submit" action="#{Auth.auth()}" />
+    </h:form>
 </f:view>
 </html>
