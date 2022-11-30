@@ -6,18 +6,39 @@ import com.mypack.entity.Manager;
 import com.mypack.service.AuthService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 @Named("Auth")
-@RequestScoped
-public class AuthController {
+@SessionScoped
+public class AuthController implements Serializable {
     private String role;
     private String email;
     private String password;
     private Admin loggedAdmin = null;
+    private Manager loggedManager = null;
+    private Driver loggedDriver = null;
+
+    public Manager getLoggedManager() {
+        return loggedManager;
+    }
+
+    public void setLoggedManager(Manager loggedManager) {
+        this.loggedManager = loggedManager;
+    }
+
+    public Driver getLoggedDriver() {
+        return loggedDriver;
+    }
+
+    public void setLoggedDriver(Driver loggedDriver) {
+        this.loggedDriver = loggedDriver;
+    }
 
     public Admin getLoggedAdmin() {
         return loggedAdmin;
@@ -50,8 +71,7 @@ public class AuthController {
         this.password = password;
     }
 
-    public String auth()
-    {
+    public String auth() throws IOException {
         switch (role)
         {
             case "Admin":
@@ -61,9 +81,12 @@ public class AuthController {
                     if (admin != null)
                     {
                         loggedAdmin = admin;
-//                        FacesContext context = FacesContext.getCurrentInstance();
-//                        context.getExternalContext().getSessionMap().put("getUser", admin);
-                        return "admin/welcome";
+                        FacesContext context = FacesContext.getCurrentInstance();
+                        context.getExternalContext().getSessionMap().put("getUser", admin);
+                        context.getExternalContext().getSessionMap().put("role", "Admin");
+                        System.out.println("admin logged");
+                        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        externalContext.redirect("/admin/welcome.xhtml");
                     }
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -76,9 +99,12 @@ public class AuthController {
                     Manager manager = loginManager(email,password);
                     if (manager != null)
                     {
+                        loggedManager = manager;
                         FacesContext context = FacesContext.getCurrentInstance();
                         context.getExternalContext().getSessionMap().put("getUser", manager);
-                        return "manager/welcome";
+                        context.getExternalContext().getSessionMap().put("role", "Manager");
+                        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        externalContext.redirect("/manager/welcome.xhtml");
                     }
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -91,9 +117,12 @@ public class AuthController {
                     Driver driver = loginDriver(email,password);
                     if (driver != null)
                     {
+                        loggedDriver = driver;
                         FacesContext context = FacesContext.getCurrentInstance();
                         context.getExternalContext().getSessionMap().put("getUser", driver);
-                        return "driver/welcome";
+                        context.getExternalContext().getSessionMap().put("role", "Driver");
+                        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        externalContext.redirect("/driver/welcome.xhtml");
                     }
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -101,7 +130,10 @@ public class AuthController {
                 break;
             }
         }
-        return "index";
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("/auth/login.xhtml");
+        return null;
+
     }
 
     private  Admin loginAdmin(String email, String password){

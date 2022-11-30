@@ -3,9 +3,7 @@ package com.mypack.dao;
 import com.mypack.config.EntityManagerConfig;
 import com.mypack.dao.interfaces.BaseDAO;
 import com.mypack.util.SoutError;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Map;
@@ -142,10 +140,11 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
 
     @Override
     public List<T> customQuery(String jpql, Map<String, Object> params) {
-        EntityManager em = EntityManagerConfig.getEntityManager();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("mypack");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try{
-            em.getTransaction().begin(); // begin transaction
-            TypedQuery<T> query = em.createQuery(jpql,clazz);
+            entityManager.getTransaction().begin(); // begin transaction
+            TypedQuery<T> query = entityManager.createQuery(jpql,clazz);
 
             final int[] index = {params.size()};
             params.forEach((key, value)->{
@@ -153,16 +152,16 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
                 index[0] -=1;
             });
             List<T> list = query.getResultList();
-            em.getTransaction().commit(); // commit transaction
+            entityManager.getTransaction().commit(); // commit transaction
             return list;
         }catch (Exception e){
             System.out.println("db stack trace: start" );
-            em.getTransaction().rollback(); // rollback transaction
+            entityManager.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             System.out.println("db stack trace: end" );
             return null;
         }finally {
-            em.close(); // close entityManager
+            entityManager.close(); // close entityManager
         }
     }
     //    @Override
