@@ -61,8 +61,8 @@ public class AuthController {
                     if (admin != null)
                     {
                         loggedAdmin = admin;
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        context.getExternalContext().getSessionMap().put("getUser", admin);
+//                        FacesContext context = FacesContext.getCurrentInstance();
+//                        context.getExternalContext().getSessionMap().put("getUser", admin);
                         return "admin/welcome";
                     }
                 }catch (Exception e){

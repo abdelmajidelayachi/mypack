@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 @Entity
 @Table(name = "manager", catalog = "mypack")
 public class Manager {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_manager")
