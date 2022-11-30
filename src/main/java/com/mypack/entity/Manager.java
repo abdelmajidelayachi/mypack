@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
 
 public class Manager {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_manager")
