@@ -1,7 +1,10 @@
 package com.mypack.controller;
 
 import com.mypack.entity.Admin;
+import com.mypack.entity.Driver;
+import com.mypack.entity.Manager;
 import com.mypack.service.AuthService;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
@@ -9,8 +12,8 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 
 @Named("Auth")
-@SessionScoped
-public class AuthController implements Serializable {
+@RequestScoped
+public class AuthController {
     private String role;
     private String email;
     private String password;
@@ -67,6 +70,36 @@ public class AuthController implements Serializable {
                 }
                 break;
             }
+            case "Manager":
+            {
+                try {
+                    Manager manager = loginManager(email,password);
+                    if (manager != null)
+                    {
+                        FacesContext context = FacesContext.getCurrentInstance();
+                        context.getExternalContext().getSessionMap().put("getUser", manager);
+                        return "manager/welcome";
+                    }
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            }
+            case "Driver":
+            {
+                try {
+                    Driver driver = loginDriver(email,password);
+                    if (driver != null)
+                    {
+                        FacesContext context = FacesContext.getCurrentInstance();
+                        context.getExternalContext().getSessionMap().put("getUser", driver);
+                        return "driver/welcome";
+                    }
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            }
         }
         return "index";
     }
@@ -75,6 +108,8 @@ public class AuthController implements Serializable {
         try{
             AuthService<Admin> adminAuthService = new AuthService<>(Admin.class);
             System.out.println("adminAuthService");
+            System.out.println("email: "+email);
+            System.out.println("password: "+password);
             Admin loggedAdmin = adminAuthService.login(email, password);
             System.out.println(loggedAdmin);
             return loggedAdmin;
@@ -84,4 +119,33 @@ public class AuthController implements Serializable {
         }
     }
 
+    private Manager loginManager(String email, String password){
+        try{
+            AuthService<Manager> authService = new AuthService<>(Manager.class);
+            System.out.println("adminAuthService");
+            System.out.println("email: "+email);
+            System.out.println("password: "+password);
+            Manager loggedUser = authService.login(email, password);
+            System.out.println(loggedUser);
+            return loggedUser;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private Driver loginDriver(String email, String password) {
+        try {
+            AuthService<Driver> authService = new AuthService<>(Driver.class);
+            System.out.println("adminAuthService");
+            System.out.println("email: " + email);
+            System.out.println("password: " + password);
+            Driver loggedUser = authService.login(email, password);
+            System.out.println(loggedUser);
+            return loggedUser;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

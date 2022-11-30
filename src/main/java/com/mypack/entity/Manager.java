@@ -3,6 +3,8 @@ package com.mypack.entity;
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
 
+@Entity
+@Table(name = "manager", catalog = "mypack")
 public class Manager {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

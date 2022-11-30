@@ -27,7 +27,10 @@ public class AuthService<T> {
             return list.size() > 0 ? list.get(0) : null;
         }catch (Exception e)
         {
+            System.out.println("stacktrace start login");
+            e.printStackTrace();
             SoutError.print("blue", e.getMessage());
+            System.out.println("stacktrace end login");
             return null;
         }
     }

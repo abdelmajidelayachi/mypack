@@ -6,8 +6,8 @@
     <persistence-unit name="mypack">
         <class>com.mypack.entity.Admin</class>
         <class>com.mypack.entity.City</class>
-        <class>com.mypack.entity.Manager</class>
         <class>com.mypack.entity.Customer</class>
+        <class>com.mypack.entity.Manager</class>
         <class>com.mypack.entity.Product</class>
         <class>com.mypack.entity.Center</class>
         <class>com.mypack.entity.Driver</class>

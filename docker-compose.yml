@@ -5,6 +5,8 @@ services:
       - 8084:8080
     volumes:
       - ./target/mypack-1.0-SNAPSHOT.war:/opt/jboss/wildfly/standalone/deployments/ROOT.war
+    depends_on:
+      - DBsql
   DBsql:
     image: mysql
     environment:
