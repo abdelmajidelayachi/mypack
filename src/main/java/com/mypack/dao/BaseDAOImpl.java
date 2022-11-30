@@ -156,8 +156,10 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().commit(); // commit transaction
             return list;
         }catch (Exception e){
+            System.out.println("db stack trace: start" );
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
+            System.out.println("db stack trace: end" );
             return null;
         }finally {
             em.close(); // close entityManager
