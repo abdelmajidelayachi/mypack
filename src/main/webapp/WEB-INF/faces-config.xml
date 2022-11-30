@@ -17,5 +17,15 @@
             <from-outcome>admin/welcome</from-outcome>
             <to-view-id>/admin/welcome.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-action>#{navigationController.welcomeManager}</from-action>
+            <from-outcome>manager/welcome</from-outcome>
+            <to-view-id>/manager/welcome.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navigationController.welcomeDriver}</from-action>
+            <from-outcome>driver/welcome</from-outcome>
+            <to-view-id>/driver/welcome.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
