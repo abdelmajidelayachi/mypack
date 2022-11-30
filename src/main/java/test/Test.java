@@ -8,8 +8,7 @@ public class Test {
     public static void main(String[] args) {
 //        AuthService<Admin> adminAuthService = new AuthService<>(Admin.class);
 //        Admin admin = adminAuthService.login("email@mail.com", "password");
-//        System.out.println(admin.getFirstname());
-        AuthController authController = new AuthController();
-
+//        AuthController authController = new AuthController();
+//        authController.auth();
     }
 }

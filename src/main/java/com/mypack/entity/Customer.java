@@ -3,7 +3,6 @@ package com.mypack.entity;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,8 +22,8 @@ public class Customer {
     @Column(name = "email")
     private String email;
     @Basic
-    @Column(name = "password")
-    private String password;
+    @Column(name = "reference")
+    private String reference;
 
     @OneToMany(mappedBy = "customer_id")
     private Set<Product> products = new HashSet<>();
@@ -61,12 +60,12 @@ public class Customer {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getReference() {
+        return reference;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setReference(String password) {
+        this.reference = password;
     }
 
 
