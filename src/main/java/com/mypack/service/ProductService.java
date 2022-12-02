@@ -28,4 +28,20 @@ public class ProductService {
             return null;
         }
     }
+
+    public boolean updateProductDelivery(int product_id) {
+        try {
+            System.out.println("product_id: " + product_id);
+            Product product = useDao.findById(product_id);
+            System.out.println(product.getId());
+            System.out.println(product.getCustomer_id());
+            product.setStatus("delivered");
+            useDao.update(product);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            SoutError.print("orange", e.getMessage());
+            return false;
+        }
+    }
 }

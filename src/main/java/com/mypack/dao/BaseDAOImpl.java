@@ -32,8 +32,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             return false;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -45,13 +43,11 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.merge(obj); // The main intention of the merge method is to update a persistent entity instance with new field values from a detached entity instance.
             em.getTransaction().commit(); // commit transaction
             return true;
-        }catch (Exception e)
-        {
-            em.getTransaction().rollback(); // rollback transaction
+        }catch (Exception e) {
+             em.getTransaction().rollback(); // rollback transaction
+            e.printStackTrace();
             SoutError.print("yellow", e.getMessage());
             return false;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -68,8 +64,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             return null;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -91,8 +85,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             return false;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -111,8 +103,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             return null;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -133,8 +123,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             em.getTransaction().rollback(); // rollback transaction
             SoutError.print("yellow", e.getMessage());
             return null;
-        }finally {
-            em.close(); // close entityManager
         }
     }
 
@@ -160,8 +148,6 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             SoutError.print("yellow", e.getMessage());
             System.out.println("db stack trace: end" );
             return null;
-        }finally {
-            entityManager.close(); // close entityManager
         }
     }
     //    @Override
