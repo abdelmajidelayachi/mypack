@@ -136,7 +136,7 @@ public class AuthController implements Serializable {
 
     }
 
-    private  Admin loginAdmin(String email, String password){
+    private Admin loginAdmin(String email, String password){
         try{
             AuthService<Admin> adminAuthService = new AuthService<>(Admin.class);
             System.out.println("adminAuthService");

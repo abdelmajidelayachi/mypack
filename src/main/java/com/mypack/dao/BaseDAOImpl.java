@@ -11,7 +11,6 @@ import java.util.Map;
 @SuppressWarnings({"unchecked", "unused"})
 public class BaseDAOImpl<T> implements BaseDAO<T> {
 
-
     final private Class<T> clazz;
 
     public BaseDAOImpl(Class<T> clazz)
@@ -134,7 +133,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             SoutError.print("yellow", e.getMessage());
             return null;
         }finally {
-            em.close(); // close entityManager
+//            em.close(); // close entityManager
         }
     }
 

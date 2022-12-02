@@ -3,7 +3,6 @@ package com.mypack.dao.interfaces;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public interface BaseDAO<T> {
     boolean save(T obj);
     boolean update(T obj);

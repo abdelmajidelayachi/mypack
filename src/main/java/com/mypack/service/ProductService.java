@@ -9,22 +9,23 @@ import java.util.List;
 public class ProductService {
     BaseDAOImpl<Product> useDao = new BaseDAOImpl<>(Product.class);
 
-    public List<Product> getAllProductsCustomer(int customer_id) {
+    public List<Product> getAllProductsCustomer(String reference) {
+        CustomerService customerService = new CustomerService();
+        int customer_id = customerService.getCustomerId(reference);
         try {
             return useDao.getAllWhere("customer_id", customer_id);
         }catch (Exception e)
         {
-            SoutError.print("orange", e.getMessage());
+            SoutError.print("orange", "errorGetAllProductsCustomer : " + e.getMessage());
             return null;
         }
     }
 
-    public Product getProductByTrackingId(int reference) {
+    public List<Product> getProductByReference(String reference) {
         try {
-            List<Product> products = useDao.getAllWhere("reference", reference);
-            return products.get(0);
+            return useDao.getAllWhere("reference", reference);
         } catch (Exception e) {
-            SoutError.print("orange", e.getMessage());
+            SoutError.print("orange","errrorGetProductByTrackingId : " + e.getMessage());
             return null;
         }
     }

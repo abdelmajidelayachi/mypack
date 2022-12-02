@@ -27,6 +27,12 @@ public class navigationController {
         }
         return "auth/login";
     }
+    
+    public String dashboardCustomer() {
+        return "customer/dashboard";
+    }
+}
+
 
     public String welcomeDriver() {
         if(context.getSessionMap().get("role") != null && context.getSessionMap().get("role").equals("driver") && context.getSessionMap().get("getUser") != null) {
@@ -36,3 +42,5 @@ public class navigationController {
     }
 
 }
+
+
