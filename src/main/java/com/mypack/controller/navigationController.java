@@ -12,4 +12,7 @@ public class navigationController {
     public String welcomeAdmin() {
         return "welcome";
     }
+    public String dashboardCustomer() {
+        return "customer/dashboard";
+    }
 }

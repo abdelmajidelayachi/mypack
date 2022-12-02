@@ -104,7 +104,7 @@ public class AuthController {
         return "index";
     }
 
-    private  Admin loginAdmin(String email, String password){
+    private Admin loginAdmin(String email, String password){
         try{
             AuthService<Admin> adminAuthService = new AuthService<>(Admin.class);
             System.out.println("adminAuthService");

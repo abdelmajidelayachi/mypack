@@ -8,14 +8,14 @@
     <navigation-rule>
         <from-view-id>index.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{navigationController.login}</from-action>
+            <from-action>#{navigationController.login()}</from-action>
             <from-outcome>login</from-outcome>
             <to-view-id>/auth/login.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-action>#{navigationController.welcomeAdmin}</from-action>
-            <from-outcome>admin/welcome</from-outcome>
-            <to-view-id>/admin/welcome.xhtml</to-view-id>
+            <from-action>#{navigationController.dashboardCustomer()}</from-action>
+            <from-outcome>customer/dashboard</from-outcome>
+            <to-view-id>/customer/dashboard.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

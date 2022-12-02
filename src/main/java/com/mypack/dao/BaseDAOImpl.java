@@ -136,7 +136,7 @@ public class BaseDAOImpl<T> implements BaseDAO<T> {
             SoutError.print("yellow", e.getMessage());
             return null;
         }finally {
-            em.close(); // close entityManager
+//            em.close(); // close entityManager
         }
     }
 

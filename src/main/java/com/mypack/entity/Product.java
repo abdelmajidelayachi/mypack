@@ -24,9 +24,6 @@ public class Product {
     @Basic
     @Column(name = "customer_id")
     private Long customer_id;
-    @Basic
-    @Column(name = "city")
-    private String city;
 
 //    @ManyToOne
 //    @JoinColumn(name = "customer_id", referencedColumnName = "id_customer")
