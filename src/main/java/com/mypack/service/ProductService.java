@@ -21,10 +21,9 @@ public class ProductService {
         }
     }
 
-    public Product getProductByTrackingId(int reference) {
+    public List<Product> getProductByReference(String reference) {
         try {
-            List<Product> products = useDao.getAllWhere("reference", reference);
-            return products.get(0);
+            return useDao.getAllWhere("reference", reference);
         } catch (Exception e) {
             SoutError.print("orange","errrorGetProductByTrackingId : " + e.getMessage());
             return null;

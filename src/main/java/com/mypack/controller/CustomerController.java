@@ -28,24 +28,16 @@ public class CustomerController implements Serializable {
         //
     }
 
-    public Product getProductByReference()
-    {
-        try {
-            //
-            return null;
-        }catch (Exception e)
-        {
-            SoutError.print("red", e.getMessage());
-            return null;
-        }
-    }
-
-    public List<Product> getAllProductsCustomer()
+    public List<Product> getProductProductsByReference()
     {
         try {
             ProductService productService = new ProductService();
-//            System.out.println("reference : "+reference);
-            return productService.getAllProductsCustomer(reference);
+            if(reference.contains("U-"))
+            {
+                return productService.getAllProductsCustomer(reference);
+            }else{
+                return productService.getProductByReference(reference);
+            }
         }catch (Exception e)
         {
             SoutError.print("red","errorGetAllProductsCustomer : " + e.getMessage());

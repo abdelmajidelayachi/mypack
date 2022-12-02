@@ -9,18 +9,27 @@ public class Product {
     @Id
     @Column(name = "id_product")
     private Long id;
+
     @Basic
     @Column(name = "reference")
     private String reference;
+
+    @Basic
+    @Column(name = "product_name")
+    private String productName;
+
     @Basic
     @Column(name = "category")
     private String category;
+
     @Basic
     @Column(name = "weight")
     private Double weight;
+
     @Basic
     @Column(name = "status")
     private String status;
+
     @Basic
     @Column(name = "customer_id")
     private Long customer_id;
@@ -43,6 +52,13 @@ public class Product {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getCategory() {
