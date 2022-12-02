@@ -15,7 +15,9 @@
             <from-action>#{navigationController.dashboardCustomer()}</from-action>
             <from-outcome>customer/dashboard</from-outcome>
             <to-view-id>/customer/dashboard.xhtml</to-view-id>
-            <from-action>#{navigationController.welcomeAdmin}</from-action>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{navigationController.welcomeAdmin()}</from-action>
             <from-outcome>admin/welcome</from-outcome>
             <to-view-id>../admin/welcome.xhtml</to-view-id>
         </navigation-case>

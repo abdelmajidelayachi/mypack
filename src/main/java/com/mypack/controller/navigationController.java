@@ -31,7 +31,7 @@ public class navigationController {
     public String dashboardCustomer() {
         return "customer/dashboard";
     }
-}
+
 
 
     public String welcomeDriver() {
