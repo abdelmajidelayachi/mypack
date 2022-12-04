@@ -11,7 +11,6 @@ import java.util.Map;
 @SuppressWarnings({"unchecked", "unused"})
 public class BaseDAOImpl<T> implements BaseDAO<T> {
 
-
     final private Class<T> clazz;
 
     public BaseDAOImpl(Class<T> clazz)
